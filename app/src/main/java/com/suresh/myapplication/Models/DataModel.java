@@ -8,6 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class DataModel {
 
+    // Retrofit assigns data from webservice to this model and Row model.
+    // (which uses gson converter to convertt json to java objects
+
     @SerializedName("title")
     @Expose
     private String title;

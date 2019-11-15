@@ -3,13 +3,8 @@ package com.suresh.myapplication.ViewModels;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.suresh.myapplication.Models.DataModel;
-import com.suresh.myapplication.Models.Row;
 import com.suresh.myapplication.Network.Api;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,19 +14,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataViewModel extends ViewModel {
 
     //this is the data that we will fetch asynchronously
-    private MutableLiveData<DataModel> dataList;
+    private MutableLiveData<DataModel> data;
 
     //we will call this method to get the data
     public LiveData<DataModel> getData() {
         //if the list is null
-        if (dataList == null) {
-            dataList = new MutableLiveData<DataModel>();
+        if (data == null) {
+            data = new MutableLiveData<DataModel>();
             //we will load it asynchronously from server in this method
             loadData();
         }
 
         //finally we will return the list
-        return dataList;
+        return data;
     }
 
 
@@ -51,7 +46,7 @@ public class DataViewModel extends ViewModel {
             public void onResponse(Call<DataModel> call, Response<DataModel> response) {
 
                 //finally we are setting the list to our MutableLiveData
-                dataList.setValue(response.body());
+                data.setValue(response.body());
             }
 
             @Override

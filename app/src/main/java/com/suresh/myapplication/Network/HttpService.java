@@ -1,10 +1,8 @@
 package com.suresh.myapplication.Network;
 
 import android.content.Context;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

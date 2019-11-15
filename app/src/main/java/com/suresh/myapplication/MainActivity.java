@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // View Model gets title from webservice and sets actionbar title dynamically
+
         DataViewModel model = ViewModelProviders.of(this).get(DataViewModel.class);
 
         model.getData().observe(this, new Observer<DataModel>() {
