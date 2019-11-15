@@ -11,6 +11,8 @@ import com.suresh.myapplication.Adapters.CustomAdapter;
 import com.suresh.myapplication.Models.DataModel;
 import com.suresh.myapplication.ViewModels.DataViewModel;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
         DataViewModel model = ViewModelProviders.of(this).get(DataViewModel.class);
 
-        model.getData().observe(this, new Observer<DataModel>() {
-            @Override
-            public void onChanged(@Nullable DataModel list) {
+        model.getData().observe(this, list -> {
 
-                getSupportActionBar().setTitle(list.getTitle());
-
+            assert list != null;
+            if(list.getTitle() != null) {
+                Objects.requireNonNull(getSupportActionBar()).setTitle(list.getTitle());
             }
+
         });
 
 

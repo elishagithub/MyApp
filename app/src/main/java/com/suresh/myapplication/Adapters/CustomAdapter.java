@@ -1,6 +1,7 @@
 package com.suresh.myapplication.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
 
         if (list.getRows().get(position).getTitle() == null) {
 
+            Log.d("NPE", "Title value is null");
+
         } else {
             holder.titleText.setVisibility(View.VISIBLE);
             holder.imageViewRightArrow.setVisibility(View.VISIBLE);
@@ -56,6 +59,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
         }
 
         if (list.getRows().get(position).getDescription() == null) {
+
+            Log.d("NPE", "Description value is null");
 
         } else {
             holder.descriptionText.setVisibility(View.VISIBLE);
@@ -65,13 +70,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
 
         if (list.getRows().get(position).getImageHref() == null) {
 
+            Log.d("NPE", "Image value is null");
+
         } else {
             holder.imageView.setVisibility(View.VISIBLE);
             holder.imageViewRightArrow.setVisibility(View.VISIBLE);
             picasso.build().load(list.getRows().get(position).getImageHref())
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_placeholder)
                     .into(holder.imageView);
         }
-
 
     }
 
@@ -81,7 +89,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
     }
 
 
-    public class ListViewHolder extends RecyclerView.ViewHolder {
+    class ListViewHolder extends RecyclerView.ViewHolder {
 
         View view;
         private TextView titleText;
@@ -89,7 +97,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
         private ImageView imageView;
         private ImageView imageViewRightArrow;
 
-        public ListViewHolder(@NonNull View itemView) {
+        ListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             view = itemView;

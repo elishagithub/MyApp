@@ -1,7 +1,6 @@
 package com.suresh.myapplication.Fragments;
 
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -18,13 +17,15 @@ import com.suresh.myapplication.Models.DataModel;
 import com.suresh.myapplication.R;
 import com.suresh.myapplication.ViewModels.DataViewModel;
 
+import java.util.Objects;
+
 public class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView recyclerView;
     private CustomAdapter customAdapter;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    DataViewModel model;
+    private DataViewModel model;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,12 +36,9 @@ public class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         model = ViewModelProviders.of(this).get(DataViewModel.class);
 
-        model.getData().observe(this, new Observer<DataModel>() {
-            @Override
-            public void onChanged(@Nullable DataModel heroList) {
-                customAdapter = new CustomAdapter(getActivity(), heroList);
-                recyclerView.setAdapter(customAdapter);
-            }
+        model.getData().observe(this, heroList -> {
+            customAdapter = new CustomAdapter(getActivity(), heroList);
+            recyclerView.setAdapter(customAdapter);
         });
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -50,35 +48,28 @@ public class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnR
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // SwipeRefreshLayout
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        mSwipeRefreshLayout = view.findViewById(R.id.swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
                 android.R.color.holo_green_dark,
                 android.R.color.holo_orange_dark,
                 android.R.color.holo_blue_dark);
 
-        /**
+        /*
          * Showing Swipe Refresh animation on activity create
          * As animation won't start on onCreate, post runnable is used
          */
-        mSwipeRefreshLayout.post(new Runnable() {
+        mSwipeRefreshLayout.post(() -> {
 
-            @Override
-            public void run() {
+            mSwipeRefreshLayout.setRefreshing(true);
 
-                mSwipeRefreshLayout.setRefreshing(true);
+            // Fetching data from server
+            model.getData().observe(Objects.requireNonNull(getActivity()), heroList -> {
+                customAdapter = new CustomAdapter(getActivity(), heroList);
+                recyclerView.setAdapter(customAdapter);
 
-                // Fetching data from server
-                model.getData().observe(getActivity(), new Observer<DataModel>() {
-                    @Override
-                    public void onChanged(@Nullable DataModel heroList) {
-                        customAdapter = new CustomAdapter(getActivity(), heroList);
-                        recyclerView.setAdapter(customAdapter);
-
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
+                mSwipeRefreshLayout.setRefreshing(false);
+            });
         });
 
         return view;
@@ -89,14 +80,11 @@ public class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         mSwipeRefreshLayout.setRefreshing(true);
 
-        model.getData().observe(this, new Observer<DataModel>() {
-            @Override
-            public void onChanged(@Nullable DataModel heroList) {
-                customAdapter = new CustomAdapter(getActivity(), heroList);
-                recyclerView.setAdapter(customAdapter);
+        model.getData().observe(this, heroList -> {
+            customAdapter = new CustomAdapter(getActivity(), heroList);
+            recyclerView.setAdapter(customAdapter);
 
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
+            mSwipeRefreshLayout.setRefreshing(false);
         });
 
     }
