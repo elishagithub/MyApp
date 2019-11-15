@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     implementation 'com.squareup.okhttp3:okhttp:4.2.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'com.jakewharton:butterknife:10.2.0'
 }
