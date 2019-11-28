@@ -25,11 +25,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+// extends AndroidViewModel instead of ViewModel to get application "context" in non activity class
 public class DataViewModel extends AndroidViewModel {
 
     //this is the data that we will fetch asynchronously
     private MutableLiveData<DataModel> data;
+
+    // define cache size
     private int cacheSize = 10 * 1024 * 1024; // 10 MB
+
+    // create cache instance
     private Cache cache = new Cache(getApplication().getCacheDir(), cacheSize);
 
     public DataViewModel(@NonNull Application application) {
@@ -53,7 +58,7 @@ public class DataViewModel extends AndroidViewModel {
     //This method is using Retrofit to get the JSON data from URL
     private void loadData() {
 
-
+        // create retrofit instance and build with base_url, gson converter and okHttpClient for offline cache
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -63,8 +68,8 @@ public class DataViewModel extends AndroidViewModel {
         Api api = retrofit.create(Api.class);
         Call<DataModel> call = api.getData();
 
-
         call.enqueue(new Callback<DataModel>() {
+
             @Override
             public void onResponse(@NotNull Call<DataModel> call, @NotNull Response<DataModel> response) {
 
@@ -75,10 +80,15 @@ public class DataViewModel extends AndroidViewModel {
             @Override
             public void onFailure(@NotNull Call<DataModel> call, @NotNull Throwable t) {
 
+                // when failed getting data from server
+
+                // do something
+
             }
         });
     }
 
+    // okHttp caching code below
 
     private Interceptor onlineInterceptor = chain -> {
         okhttp3.Response response = chain.proceed(chain.request());
@@ -109,6 +119,7 @@ public class DataViewModel extends AndroidViewModel {
             .build();
 
 
+    // get network state from NetworkInfo (is connected to internet or not...)
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);

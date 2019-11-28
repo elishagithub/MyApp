@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Row {
 
+    // Model for data fetched from server, Retrofit - Gson converter converts json to java object
+    // Gson uses to convert json to java objects and vice versa
+
     @SerializedName("title")
     @Expose
     private String title;
@@ -21,24 +24,12 @@ public class Row {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImageHref() {
         return imageHref;
-    }
-
-    public void setImageHref(String imageHref) {
-        this.imageHref = imageHref;
     }
 
 }

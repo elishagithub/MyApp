@@ -23,6 +23,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
 
     // constructor which gets context and data from calling fragment/activity
     public CustomAdapter(Context context, DataModel list) {
+
+        // get context and list and assign to local variables
         this.context = context;
         this.list = list;
     }
@@ -41,8 +43,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.ListViewHolder holder, int position) {
 
-        // assign value to textview
-        Picasso.Builder picasso = new Picasso.Builder(context);
+        // assign values to view in bindviewholder
 
         holder.titleText.setVisibility(View.GONE);
         holder.descriptionText.setVisibility(View.GONE);
@@ -51,7 +52,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
 
 
         // if title, description and image is present
-
         if(list.getRows().get(position).getTitle() != null && list.getRows().get(position).getDescription() != null && list.getRows().get(position).getImageHref() != null)
         {
             holder.titleText.setVisibility(View.VISIBLE);
@@ -80,6 +80,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
     }
 
 
+    // holds references to views and makes recyclerview works smoothly
     class ListViewHolder extends RecyclerView.ViewHolder {
 
         View view;

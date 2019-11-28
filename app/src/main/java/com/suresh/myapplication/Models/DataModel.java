@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class DataModel {
 
-    // Retrofit assigns data from webservice to this model and Row model.
-    // (which uses gson converter to convertt json to java objects
+    // Model for data fetched from server, Retrofit - Gson converter converts json to java object
+    // Gson uses to convert json to java objects and vice versa
 
     @SerializedName("title")
     @Expose
@@ -23,16 +23,8 @@ public class DataModel {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public List<Row> getRows() {
         return rows;
-    }
-
-    public void setRows(List<Row> rows) {
-        this.rows = rows;
     }
 
 }
