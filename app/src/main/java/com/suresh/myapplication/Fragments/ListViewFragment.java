@@ -1,9 +1,7 @@
 package com.suresh.myapplication.Fragments;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.suresh.myapplication.Adapters.CustomAdapter;
-import com.suresh.myapplication.Models.DataModel;
 import com.suresh.myapplication.R;
 import com.suresh.myapplication.ViewModels.DataViewModel;
 
@@ -26,6 +23,7 @@ public class ListViewFragment extends Fragment implements SwipeRefreshLayout.OnR
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private DataViewModel model;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

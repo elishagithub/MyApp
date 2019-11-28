@@ -2,12 +2,16 @@ package com.suresh.myapplication;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
 import com.suresh.myapplication.Adapters.CustomAdapter;
+import com.suresh.myapplication.Fragments.ListViewFragment;
 import com.suresh.myapplication.Models.DataModel;
 import com.suresh.myapplication.ViewModels.DataViewModel;
 
@@ -33,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, new ListViewFragment());
+        fragmentTransaction.commit();
 
     }
 }

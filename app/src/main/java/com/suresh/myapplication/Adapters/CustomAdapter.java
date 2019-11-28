@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.suresh.myapplication.Models.DataModel;
 import com.suresh.myapplication.R;
@@ -48,37 +49,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ListViewHo
         holder.imageView.setVisibility(View.GONE);
         holder.imageViewRightArrow.setVisibility(View.GONE);
 
-        if (list.getRows().get(position).getTitle() == null) {
 
-            Log.d("NPE", "Title value is null");
+        // if title, description and image is present
 
-        } else {
+        if(list.getRows().get(position).getTitle() != null && list.getRows().get(position).getDescription() != null && list.getRows().get(position).getImageHref() != null)
+        {
             holder.titleText.setVisibility(View.VISIBLE);
-            holder.imageViewRightArrow.setVisibility(View.VISIBLE);
-            holder.titleText.setText(list.getRows().get(position).getTitle());
-        }
-
-        if (list.getRows().get(position).getDescription() == null) {
-
-            Log.d("NPE", "Description value is null");
-
-        } else {
             holder.descriptionText.setVisibility(View.VISIBLE);
-            holder.imageViewRightArrow.setVisibility(View.VISIBLE);
-            holder.descriptionText.setText(list.getRows().get(position).getDescription());
-        }
-
-        if (list.getRows().get(position).getImageHref() == null) {
-
-            Log.d("NPE", "Image value is null");
-
-        } else {
             holder.imageView.setVisibility(View.VISIBLE);
             holder.imageViewRightArrow.setVisibility(View.VISIBLE);
-            picasso.build().load(list.getRows().get(position).getImageHref())
-                    .placeholder(R.drawable.ic_placeholder)
+
+            holder.titleText.setText(list.getRows().get(position).getTitle());
+            holder.descriptionText.setText(list.getRows().get(position).getDescription());
+            Glide.with(context)
+                    .load(list.getRows().get(position).getImageHref())
+                    .centerCrop()
                     .error(R.drawable.ic_placeholder)
                     .into(holder.imageView);
+
+        }else
+        {
+            Log.d("TAG", "Title or Description or Image is null");
         }
 
     }
